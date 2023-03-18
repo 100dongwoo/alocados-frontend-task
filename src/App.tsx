@@ -45,25 +45,20 @@ function App() {
         <ThemeProvider theme={theme}>
             <GlobalStyle />
             <AppProvider contexts={[ThemeProviderSheet]}>
-                <>
+                <Router>
                     <Header />
-                    <Router>
-                        <Routes>
-                            <Route
-                                path='/ExchangeHistory'
-                                element={<ExchangeHistoryPage />}
-                            />
-                            <Route
-                                path='/Exchanging'
-                                element={<ExchangingPage />}
-                            />
-                            <Route path='/404' element={<ErrorPage />} />
-                            <Route path='/' element={<ExchangeHistoryPage />} />
+                    <Routes>
+                        <Route
+                            path='/ExchangeHistory'
+                            element={<ExchangeHistoryPage />}
+                        />
 
-                            <Route path='*' element={<Navigate to='/404' />} />
-                        </Routes>
-                    </Router>
-                </>
+                        <Route path='/404' element={<ErrorPage />} />
+                        <Route path='/' element={<ExchangingPage />} />
+
+                        <Route path='*' element={<Navigate to='/404' />} />
+                    </Routes>
+                </Router>
             </AppProvider>
         </ThemeProvider>
     );
