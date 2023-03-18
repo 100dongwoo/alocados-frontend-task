@@ -1,26 +1,68 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+    BrowserRouter as Router,
+    Route,
+    Routes,
+    Navigate,
+} from 'react-router-dom';
+
+import { ThemeProvider } from 'styled-components';
+
+import ThemeProviderSheet from '@/contexts/ThemeProvider';
+import ErrorPage from '@/pages/ErrorPage';
+import ExchangeHistoryPage from '@/pages/ExchangeHistoryPage';
+import ExchangingPage from '@/pages/ExchangingPage';
+import GlobalStyle from '@/styles/global-styles';
+import { theme } from '@/styles/theme';
+
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const AppProvider = ({
+        contexts,
+        children,
+    }: {
+        contexts: (({ children }: { children: JSX.Element }) => JSX.Element)[];
+        children: JSX.Element;
+    }) =>
+        contexts.reduce(
+            (
+                prev: JSX.Element,
+                context: ({
+                    children,
+                }: {
+                    children: JSX.Element;
+                }) => JSX.Element
+            ) =>
+                React.createElement(context, {
+                    children: prev,
+                }),
+            children
+        );
+
+    return (
+        <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <AppProvider contexts={[ThemeProviderSheet]}>
+                <Router>
+                    <Routes>
+                        <Route
+                            path='/ExchangeHistory'
+                            element={<ExchangeHistoryPage />}
+                        />
+                        <Route
+                            path='/Exchanging'
+                            element={<ExchangingPage />}
+                        />
+                        <Route path='/404' element={<ErrorPage />} />
+                        <Route path='/' element={<ExchangeHistoryPage />} />
+
+                        <Route path='*' element={<Navigate to='/404' />} />
+                    </Routes>
+                </Router>
+            </AppProvider>
+        </ThemeProvider>
+    );
 }
 
 export default App;
