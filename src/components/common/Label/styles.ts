@@ -31,6 +31,10 @@ export const BoldPoppins12Font = styled(BoldFont)`
 export const BoldPoppins14Font = styled(BoldFont)`
     font-size: 14px;
 `;
+export const BoldPoppins15Font = styled(BoldFont)`
+    font-size: 15px;
+`;
+
 export const BoldPoppins16Font = styled(BoldFont)`
     font-size: 16px;
 `;
@@ -46,6 +50,9 @@ export const SemiBoldPoppins12Font = styled(SemiBoldFont)`
 `;
 export const SemiBoldPoppins14Font = styled(SemiBoldFont)`
     font-size: 14px;
+`;
+export const SemiBoldPoppins15Font = styled(SemiBoldFont)`
+    font-size: 15px;
 `;
 export const SemiBoldPoppins16Font = styled(SemiBoldFont)`
     font-size: 16px;
@@ -63,6 +70,9 @@ export const LightPoppins12Font = styled(LightFont)`
 export const LightPoppins14Font = styled(LightFont)`
     font-size: 14px;
 `;
+export const LightPoppins15Font = styled(LightFont)`
+    font-size: 15px;
+`;
 export const LightPoppins16Font = styled(LightFont)`
     font-size: 16px;
 `;
@@ -78,6 +88,9 @@ export const NormalPoppins12Font = styled(NormalFont)`
 `;
 export const NormalPoppins14Font = styled(NormalFont)`
     font-size: 14px;
+`;
+export const NormalPoppins15Font = styled(NormalFont)`
+    font-size: 15px;
 `;
 export const NormalPoppins16Font = styled(NormalFont)`
     font-size: 16px;

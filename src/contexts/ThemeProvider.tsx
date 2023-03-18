@@ -1,10 +1,21 @@
 import React from 'react';
 
-import { colors } from '@/styles/theme';
+import { colors, ColorTypes } from '@/styles/theme';
 
-export const ThemeContext = React.createContext<any>(null);
+type ThemeContextType = {
+    colors: ColorTypes;
+};
+const defaultValue: ThemeContextType = {
+    colors,
+};
 
-function ThemeProviderSheet({ children }: any) {
+export const ThemeContext = React.createContext(defaultValue);
+
+function ThemeProviderSheet({
+    children,
+}: {
+    children: JSX.Element[] | JSX.Element;
+}) {
     const theme = {
         colors,
     };

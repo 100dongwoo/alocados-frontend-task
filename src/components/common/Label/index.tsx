@@ -3,21 +3,25 @@ import { CSSProperties } from 'react';
 import {
     BoldPoppins12Font,
     BoldPoppins14Font,
+    BoldPoppins15Font,
     BoldPoppins16Font,
     BoldPoppins18Font,
     BoldPoppins20Font,
     SemiBoldPoppins12Font,
     SemiBoldPoppins14Font,
+    SemiBoldPoppins15Font,
     SemiBoldPoppins16Font,
     SemiBoldPoppins18Font,
     SemiBoldPoppins20Font,
     LightPoppins12Font,
     LightPoppins14Font,
+    LightPoppins15Font,
     LightPoppins16Font,
     LightPoppins18Font,
     LightPoppins20Font,
     NormalPoppins12Font,
     NormalPoppins14Font,
+    NormalPoppins15Font,
     NormalPoppins16Font,
     NormalPoppins18Font,
     NormalPoppins20Font,
@@ -41,6 +45,13 @@ export const BoldPoppins14 = ({ text, style, ...props }: LabelProps) => {
         <BoldPoppins14Font style={style} {...props}>
             {text}
         </BoldPoppins14Font>
+    );
+};
+export const BoldPoppins15 = ({ text, style, ...props }: LabelProps) => {
+    return (
+        <BoldPoppins15Font style={style} {...props}>
+            {text}
+        </BoldPoppins15Font>
     );
 };
 export const BoldPoppins16 = ({ text, style, ...props }: LabelProps) => {
@@ -77,6 +88,13 @@ export const SemiBoldPoppins14 = ({ text, style, ...props }: LabelProps) => {
         <SemiBoldPoppins14Font style={style} {...props}>
             {text}
         </SemiBoldPoppins14Font>
+    );
+};
+export const SemiBoldPoppins15 = ({ text, style, ...props }: LabelProps) => {
+    return (
+        <SemiBoldPoppins15Font style={style} {...props}>
+            {text}
+        </SemiBoldPoppins15Font>
     );
 };
 export const SemiBoldPoppins16 = ({ text, style, ...props }: LabelProps) => {
@@ -117,6 +135,13 @@ export const LightPoppins14 = ({ text, style, ...props }: LabelProps) => {
         </LightPoppins14Font>
     );
 };
+export const LightPoppins15 = ({ text, style, ...props }: LabelProps) => {
+    return (
+        <LightPoppins15Font style={style} {...props}>
+            {text}
+        </LightPoppins15Font>
+    );
+};
 export const LightPoppins16 = ({ text, style, ...props }: LabelProps) => {
     return (
         <LightPoppins16Font style={style} {...props}>
@@ -153,6 +178,13 @@ export const NormalPoppins14 = ({ text, style, ...props }: LabelProps) => {
         <NormalPoppins14Font style={style} {...props}>
             {text}
         </NormalPoppins14Font>
+    );
+};
+export const NormalPoppins15 = ({ text, style, ...props }: LabelProps) => {
+    return (
+        <NormalPoppins15Font style={style} {...props}>
+            {text}
+        </NormalPoppins15Font>
     );
 };
 export const NormalPoppins16 = ({ text, style, ...props }: LabelProps) => {

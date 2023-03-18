@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
       }
       button{
         border:none;
+        cursor: pointer;
       }
     `;
 export default GlobalStyle;
