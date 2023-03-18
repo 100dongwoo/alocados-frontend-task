@@ -1,26 +1,21 @@
 import React, { useContext } from 'react';
 
+import styled from 'styled-components';
+
 import RowContainer from '@/components/common/Container/RowContainer';
-import { NormalPoppins18, SemiBoldPoppins18 } from '@/components/common/Label';
-import { CoinImage, Container } from '@/components/elements/SummaryItem/styles';
+import { SemiBoldPoppins18 } from '@/components/common/Label';
 import { ThemeContext } from '@/contexts/ThemeProvider';
 
-interface SummaryItemType {
+interface RowIconListType {
     text: 'Solana' | 'Ethereum' | 'BnB';
     value: number;
 }
-const SummaryItem = ({ text, value }: SummaryItemType) => {
+const RowIconList = ({ text, value }: RowIconListType) => {
     const { colors } = useContext(ThemeContext);
 
     return (
-        <Container>
-            <RowContainer>
-                <CoinImage src={`assets/coins/${text}.png`} alt={text} />
-                <NormalPoppins18
-                    text={text}
-                    style={{ color: colors.LIGHTSHADE700 }}
-                />
-            </RowContainer>
+        <RowContainer>
+            <CoinImage src={`assets/coins/icon/${text}.png`} alt={text} />
             <SemiBoldPoppins18
                 text={
                     value.toLocaleString() +
@@ -29,8 +24,14 @@ const SummaryItem = ({ text, value }: SummaryItemType) => {
                 }
                 style={{ color: colors.LIGHTSHADE900, lineHeight: '32px' }}
             />
-        </Container>
+        </RowContainer>
     );
 };
 
-export default SummaryItem;
+const CoinImage = styled.img`
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+`;
+
+export default RowIconList;
