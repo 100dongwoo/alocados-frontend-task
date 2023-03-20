@@ -11,10 +11,12 @@ import useOnClickOutside from '@/hooks/useOnClickOutside';
 import useToggle from '@/hooks/useToggle';
 import CoinStore from '@/zustand/store';
 
+type coinType = null | 'Solana' | 'Ethereum' | 'BnB';
+
 interface DisableDropDownType {
-    onClick: (data: any) => void;
+    onClick: (data: { name: coinType; image: string }) => void;
     value: null | 'Solana' | 'Ethereum' | 'BnB';
-    inputValue?: any;
+    inputValue?: string;
     anotherValue: null | 'Solana' | 'Ethereum' | 'BnB';
 }
 
@@ -79,7 +81,9 @@ export const DisableDropDown = ({
                         Object.values(Coins)?.map(
                             (data: any, index: number) => {
                                 const disable =
-                                    coins[COINTYPE[data.name]] < inputValue ||
+                                    (inputValue &&
+                                        coins[COINTYPE[data.name]] <
+                                            inputValue) ||
                                     anotherValue === data.name;
                                 return (
                                     <List
@@ -99,8 +103,7 @@ export const DisableDropDown = ({
                                             }}
                                             color='BLACK'
                                         />
-                                        {coins[COINTYPE[data.name]] <
-                                            inputValue && (
+                                        {disable && (
                                             <BoldPoppins14 text={'X'} />
                                         )}
                                     </List>

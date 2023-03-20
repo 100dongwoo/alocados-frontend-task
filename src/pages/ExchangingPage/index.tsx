@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import dayjs from 'dayjs';
+import internal from 'stream';
 
 import Touchable from '@/components/common/Button/Touchable';
 import TransactionButton from '@/components/common/Button/TransactionButton';
@@ -98,15 +99,15 @@ const ExchangingPage = () => {
     };
 
     const onClickDropDown = useCallback(
-        (item: any) => {
+        (item: { name: coinType; image: string }) => {
             setFromSelectCoin(item.name);
         },
         [fromSelectCoin]
     );
 
     const onClickToDropDown = useCallback(
-        (item: any) => {
-            setToSelectCoin(item.name);
+        (item: { name: coinType }) => {
+            setToSelectCoin(item?.name);
         },
         [toSelectCoin]
     );

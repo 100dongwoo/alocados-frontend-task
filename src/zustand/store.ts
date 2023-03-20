@@ -26,7 +26,13 @@ const CoinStore = create<CoinState>((set) => ({
     ...DEFAULT_PROPS,
     exChangeHistory: [],
 
-    covertAction: ({ history, coinValues }: any) => {
+    covertAction: ({
+        history,
+        coinValues,
+    }: {
+        history: historyType;
+        coinValues: CoinProps;
+    }) => {
         set((state) => ({
             ...coinValues,
             exChangeHistory: state.exChangeHistory.concat(history),
