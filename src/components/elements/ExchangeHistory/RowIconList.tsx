@@ -18,7 +18,7 @@ const RowIconList = ({ text, value }: RowIconListType) => {
             <CoinImage src={`assets/coins/icon/${text}.png`} alt={text} />
             <SemiBoldPoppins18
                 text={
-                    value.toLocaleString() +
+                    (Math.floor(value * 100) / 100).toLocaleString() +
                     ' ' +
                     text.slice(0, 3).toLocaleUpperCase()
                 }

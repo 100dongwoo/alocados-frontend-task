@@ -47,16 +47,21 @@ const ExchangingPage = () => {
     const covertValue = ConversionCoin(
         fromSelectCoin,
         toSelectCoin,
-        Number(conversionCount ?? 0)
+        parseFloat(conversionCount ? conversionCount : '0')
     );
-
     const inputError =
+        conversionCount === '0' ||
         covertValue < 1 ||
         Boolean(
             fromSelectCoin &&
-                coins[COINTYPE[fromSelectCoin]] < Number(conversionCount)
+                coins[COINTYPE[fromSelectCoin]] < parseFloat(conversionCount)
         );
-    const hasError = inputError || !toSelectCoin || fromSelectCoin === null;
+    const hasError =
+        (fromSelectCoin && fromSelectCoin === toSelectCoin) ||
+        conversionCount.length === 0 ||
+        inputError ||
+        !toSelectCoin ||
+        fromSelectCoin === null;
 
     const RowStyle = useMemo(
         () => ({
@@ -73,7 +78,7 @@ const ExchangingPage = () => {
         }
         const obj = {
             fromCoin: fromSelectCoin,
-            fromCoinValue: Number(conversionCount),
+            fromCoinValue: parseFloat(conversionCount),
             toCoin: toSelectCoin,
             toCoinValue: covertValue,
             date: dayjs(),
@@ -84,9 +89,9 @@ const ExchangingPage = () => {
         const beforeAfterCoin = coinValues[COINTYPE[toSelectCoin]];
 
         coinValues[COINTYPE[fromSelectCoin]] =
-            beforeFromCoin - Number(conversionCount);
+            beforeFromCoin - parseFloat(conversionCount);
         coinValues[COINTYPE[toSelectCoin]] =
-            beforeAfterCoin + Number(covertValue);
+            beforeAfterCoin + parseFloat(String(covertValue));
 
         covertAction({ history: obj, coinValues });
     };

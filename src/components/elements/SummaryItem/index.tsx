@@ -23,7 +23,9 @@ const SummaryItem = ({ text, value }: SummaryItemType) => {
             </RowContainer>
             <SemiBoldPoppins18
                 text={
-                    value.toLocaleString() +
+                    value.toLocaleString('en-US', {
+                        maximumFractionDigits: 10,
+                    }) +
                     ' ' +
                     text.slice(0, 3).toLocaleUpperCase()
                 }

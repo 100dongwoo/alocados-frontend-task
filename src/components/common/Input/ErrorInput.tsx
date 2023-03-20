@@ -27,13 +27,23 @@ const ErrorInput = ({
                 style={{ color: 'LIGHTSHADE600', lineHeight: '12px' }}
             />
             <Input
-                onChange={onChange}
+                onChange={(e) => {
+                    let _pattern2 = /^\d*[.]\d{11}$/;
+                    if (_pattern2.test(e.target.value)) {
+                        return false;
+                    }
+                    onChange(e);
+                }}
                 value={value}
                 type={type}
                 onKeyPress={(event) => {
                     if (!/[0-9]/.test(event.key) && event.key !== '.') {
                         event.preventDefault();
                     }
+                }}
+                onWheelCapture={(e) => {
+                    const target = e.target as HTMLInputElement;
+                    target.blur();
                 }}
             />
         </Container>
