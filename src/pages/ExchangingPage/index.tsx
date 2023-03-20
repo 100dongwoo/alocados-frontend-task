@@ -152,6 +152,8 @@ const ExchangingPage = () => {
                         <DisableDropDown
                             onClick={onClickDropDown}
                             value={fromSelectCoin}
+                            inputValue={conversionCount}
+                            anotherValue={toSelectCoin}
                         />
                     </RowContainer>
                     <Touchable
@@ -178,6 +180,7 @@ const ExchangingPage = () => {
                         <DisableDropDown
                             onClick={onClickToDropDown}
                             value={toSelectCoin}
+                            anotherValue={fromSelectCoin}
                         />
                     </RowContainer>
 

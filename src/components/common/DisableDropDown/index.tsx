@@ -1,22 +1,39 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 
 import styled from 'styled-components';
 
 import Touchable from '@/components/common/Button/Touchable';
 import RowContainer from '@/components/common/Container/RowContainer';
-import { NormalPoppins14 } from '@/components/common/Label';
+import { BoldPoppins14, NormalPoppins14 } from '@/components/common/Label';
 import { Coins } from '@/constants/Coins';
 import { ThemeContext } from '@/contexts/ThemeProvider';
+import useOnClickOutside from '@/hooks/useOnClickOutside';
 import useToggle from '@/hooks/useToggle';
+import CoinStore from '@/zustand/store';
 
 interface DisableDropDownType {
     onClick: (data: any) => void;
     value: null | 'Solana' | 'Ethereum' | 'BnB';
+    inputValue?: any;
+    anotherValue: null | 'Solana' | 'Ethereum' | 'BnB';
 }
 
-export const DisableDropDown = ({ onClick, value }: DisableDropDownType) => {
+export const DisableDropDown = ({
+    onClick,
+    value,
+    inputValue,
+    anotherValue,
+}: DisableDropDownType) => {
+    const COINTYPE: { [key: string]: any } = {
+        Solana: 'SOLANA',
+        Ethereum: 'ETH',
+        BnB: 'BNB',
+    };
     const [show, toggle, setShow] = useToggle();
     const { colors } = useContext(ThemeContext);
+    const coins: { [index: string]: any } = CoinStore();
+
+    const ref = useRef(null);
 
     const RowStyle = useMemo(
         () => ({
@@ -28,8 +45,12 @@ export const DisableDropDown = ({ onClick, value }: DisableDropDownType) => {
         []
     );
 
+    useOnClickOutside(ref, () => {
+        setShow(false);
+    });
+
     return (
-        <Container>
+        <Container ref={ref}>
             <Touchable onClick={toggle}>
                 <RowContainer style={RowStyle}>
                     <>
@@ -57,13 +78,19 @@ export const DisableDropDown = ({ onClick, value }: DisableDropDownType) => {
                     {show &&
                         Object.values(Coins)?.map(
                             (data: any, index: number) => {
+                                const disable =
+                                    coins[COINTYPE[data.name]] < inputValue ||
+                                    anotherValue === data.name;
                                 return (
                                     <List
                                         key={index}
                                         onClick={() => {
-                                            onClick(data);
+                                            if (!disable) {
+                                                onClick(data);
+                                            }
                                             toggle();
                                         }}
+                                        disable={disable}
                                     >
                                         <NormalPoppins14
                                             text={data.name}
@@ -72,6 +99,10 @@ export const DisableDropDown = ({ onClick, value }: DisableDropDownType) => {
                                             }}
                                             color='BLACK'
                                         />
+                                        {coins[COINTYPE[data.name]] <
+                                            inputValue && (
+                                            <BoldPoppins14 text={'X'} />
+                                        )}
                                     </List>
                                 );
                             }
@@ -97,14 +128,18 @@ const ListContainer = styled.div`
 const List = styled.div`
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 42px;
     padding-right: 18px;
     padding-left: 18px;
-    cursor: pointer;
     border-bottom: 0.5px solid #cccccc;
     &:hover {
-        opacity: 0.5;
+        opacity: ${(props: { disable: boolean }) => (props.disable ? 1 : 0.5)};
     }
+    background: ${(props: { disable: boolean }) =>
+        props.disable ? 'rgba(186,13,13,0.18)' : '#ffffff'};
+    cursor: ${(props: { disable: boolean }) =>
+        props.disable ? 'not-allowed' : 'pointer'};
 `;
 const CoinImage = styled.img`
     width: 24px;
