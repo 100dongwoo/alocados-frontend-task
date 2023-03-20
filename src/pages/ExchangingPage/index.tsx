@@ -20,10 +20,23 @@ import CoinStore from '@/zustand/store';
 
 type coinType = null | 'Solana' | 'Ethereum' | 'BnB';
 
+type ObjType = {
+    [index: string]: string;
+    Solana: 'SOLANA';
+    Ethereum: 'ETH';
+    BnB: 'BNB';
+};
+const COINTYPE: ObjType = {
+    Solana: 'SOLANA',
+    Ethereum: 'ETH',
+    BnB: 'BNB',
+};
+
 const ExchangingPage = () => {
     const { colors } = useContext(ThemeContext);
 
-    const { covertAction, exChangeHistory } = CoinStore();
+    const { covertAction, exChangeHistory, ETH, SOLANA, BNB } = CoinStore();
+    const coins = CoinStore();
 
     const lastHistory = exChangeHistory[exChangeHistory.length - 1];
     const [fromSelectCoin, setFromSelectCoin] = useState<coinType>(null);
@@ -37,7 +50,12 @@ const ExchangingPage = () => {
         Number(conversionCount ?? 0)
     );
 
-    const inputError = covertValue < 1;
+    const inputError =
+        covertValue < 1 ||
+        Boolean(
+            fromSelectCoin &&
+                coins[COINTYPE[fromSelectCoin]] < Number(conversionCount)
+        );
     const hasError = inputError || !toSelectCoin || fromSelectCoin === null;
 
     const RowStyle = useMemo(
@@ -60,7 +78,17 @@ const ExchangingPage = () => {
             toCoinValue: covertValue,
             date: dayjs(),
         };
-        covertAction(obj);
+
+        let coinValues = { ETH, SOLANA, BNB };
+        const beforeFromCoin = coinValues[COINTYPE[fromSelectCoin]];
+        const beforeAfterCoin = coinValues[COINTYPE[toSelectCoin]];
+
+        coinValues[COINTYPE[fromSelectCoin]] =
+            beforeFromCoin - Number(conversionCount);
+        coinValues[COINTYPE[toSelectCoin]] =
+            beforeAfterCoin + Number(covertValue);
+
+        covertAction({ history: obj, coinValues });
     };
 
     const onClickDropDown = useCallback(
@@ -112,7 +140,7 @@ const ExchangingPage = () => {
                         <ErrorInput
                             value={conversionCount}
                             onChange={onChangeConversionCount}
-                            disable={inputError}
+                            disable={inputError && fromSelectCoin !== null}
                         />
 
                         <DisableDropDown
