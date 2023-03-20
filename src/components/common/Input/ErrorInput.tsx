@@ -9,20 +9,39 @@ import { ColorTypes } from '@/styles/theme';
 interface ErrorInputType {
     style?: CSSProperties;
     disable?: boolean;
+    onChange: any;
+    value: string;
+    type?: string;
 }
-const ErrorInput = ({ disable = false, style }: ErrorInputType) => {
+const ErrorInput = ({
+    disable = false,
+    style,
+    onChange,
+    value,
+    type = 'number',
+}: ErrorInputType) => {
     const { colors } = useContext(ThemeContext);
 
     return (
         <Container disable={disable} style={style}>
             <SemiBoldPoppins12
                 text={'전환수량'}
-                style={{ color: 'LIGHTSHADE600' }}
+                style={{ color: 'LIGHTSHADE600', lineHeight: '12px' }}
             />
-            <Input />
+            <Input
+                onChange={onChange}
+                value={value}
+                type={type}
+                onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key) && event.key !== '.') {
+                        event.preventDefault();
+                    }
+                }}
+            />
         </Container>
     );
 };
+
 const Container = styled.div`
     background: ${(props: { theme: ColorTypes }) =>
         props.theme.colors.LIGHTSHADE000};
@@ -30,12 +49,12 @@ const Container = styled.div`
     align-items: center;
     width: 100%;
     padding: 10px 14px;
+    height: 56px;
     border: ${(props: { disable: boolean; theme: ColorTypes }) =>
         props.disable ? `1.2px solid #F7254B` : `1.2px solid transparent`};
 `;
 
 const Input = styled.input`
-    margin-top: 4px;
     border: none;
     font-weight: 600;
     font-size: 18px;
@@ -43,5 +62,7 @@ const Input = styled.input`
         props.theme.colors.LIGHTSHADE800};
     width: 100%;
     background: transparent;
+    height: 18px;
+    margin-top: 4px;
 `;
 export default ErrorInput;

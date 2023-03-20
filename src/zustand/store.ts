@@ -11,9 +11,9 @@ interface CoinState extends CoinProps {
 }
 
 const DEFAULT_PROPS: CoinProps = {
-    SOLANA: 1211023512.34,
-    ETH: 512.01,
-    BNB: 0.35,
+    SOLANA: 0,
+    ETH: 2000,
+    BNB: 0,
 };
 
 const CoinStore = create<CoinState>((set) => ({
