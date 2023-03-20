@@ -1,5 +1,12 @@
 import create from 'zustand';
 
+type ObjType = {
+    [index: string]: string;
+    Solana: 'SOLANA';
+    Ethereum: 'ETH';
+    BnB: 'BNB';
+};
+
 interface CoinProps {
     SOLANA: number;
     ETH: number;
@@ -7,7 +14,8 @@ interface CoinProps {
 }
 
 interface CoinState extends CoinProps {
-    // addCoin: () => void;
+    exChangeHistory: historyType[];
+    covertAction: (value: historyType) => void;
 }
 
 const DEFAULT_PROPS: CoinProps = {
@@ -18,6 +26,13 @@ const DEFAULT_PROPS: CoinProps = {
 
 const CoinStore = create<CoinState>((set) => ({
     ...DEFAULT_PROPS,
+    exChangeHistory: [],
+
+    covertAction: (value) => {
+        set((state) => ({
+            exChangeHistory: state.exChangeHistory.concat(value),
+        }));
+    },
 }));
 
 export default CoinStore;

@@ -1,5 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
+import dayjs from 'dayjs';
+
 import Touchable from '@/components/common/Button/Touchable';
 import TransactionButton from '@/components/common/Button/TransactionButton';
 import RowContainer from '@/components/common/Container/RowContainer';
@@ -14,16 +16,29 @@ import { ConversionCoin } from '@/constants/Coins';
 import { ThemeContext } from '@/contexts/ThemeProvider';
 import useInput from '@/hooks/useInput';
 import { SwapImage } from '@/pages/ExchangingPage/styles';
+import CoinStore from '@/zustand/store';
 
 type coinType = null | 'Solana' | 'Ethereum' | 'BnB';
+
 const ExchangingPage = () => {
+    const { colors } = useContext(ThemeContext);
+
+    const { covertAction, exChangeHistory } = CoinStore();
+
+    const lastHistory = exChangeHistory[exChangeHistory.length - 1];
     const [fromSelectCoin, setFromSelectCoin] = useState<coinType>(null);
     const [toSelectCoin, setToSelectCoin] = useState<coinType>(null);
-
     const [conversionCount, onChangeConversionCount, setConversionCount] =
         useInput('');
 
-    const { colors } = useContext(ThemeContext);
+    const covertValue = ConversionCoin(
+        fromSelectCoin,
+        toSelectCoin,
+        Number(conversionCount ?? 0)
+    );
+
+    const inputError = covertValue < 1;
+    const hasError = inputError || !toSelectCoin || fromSelectCoin === null;
 
     const RowStyle = useMemo(
         () => ({
@@ -34,7 +49,19 @@ const ExchangingPage = () => {
         []
     );
 
-    const onClickTransaction = () => {};
+    const onClickTransaction = () => {
+        if (hasError) {
+            return;
+        }
+        const obj = {
+            fromCoin: fromSelectCoin,
+            fromCoinValue: Number(conversionCount),
+            toCoin: toSelectCoin,
+            toCoinValue: covertValue,
+            date: dayjs(),
+        };
+        covertAction(obj);
+    };
 
     const onClickDropDown = useCallback(
         (item: any) => {
@@ -54,14 +81,6 @@ const ExchangingPage = () => {
         setFromSelectCoin(toSelectCoin);
         setToSelectCoin(fromSelectCoin);
     }, [toSelectCoin, fromSelectCoin]);
-
-    const inputError =
-        ConversionCoin(
-            fromSelectCoin,
-            toSelectCoin,
-            Number(conversionCount ?? 0)
-        ) < 1;
-    const hasError = inputError || !toSelectCoin;
 
     return (
         <div
@@ -114,13 +133,7 @@ const ExchangingPage = () => {
                     <RowContainer style={RowStyle}>
                         <SemiBoldPoppins18
                             text={
-                                toSelectCoin && toSelectCoin
-                                    ? ConversionCoin(
-                                          fromSelectCoin,
-                                          toSelectCoin,
-                                          Number(conversionCount ?? 0)
-                                      )
-                                    : ''
+                                toSelectCoin && toSelectCoin ? covertValue : ''
                             }
                             style={{
                                 color: colors.PRIMARY100,
@@ -139,12 +152,17 @@ const ExchangingPage = () => {
                         style={{ margin: '41px 0px' }}
                         disable={hasError}
                     />
-                    <TransactionItem
-                        leftValue={1233123}
-                        leftCoin={'Ethereum'}
-                        rightValue={1233123}
-                        rightCoin={'Ethereum'}
-                    />
+                    <>
+                        {exChangeHistory.length > 0 && (
+                            <TransactionItem
+                                date={lastHistory.date}
+                                leftValue={lastHistory.fromCoinValue}
+                                leftCoin={lastHistory.fromCoin}
+                                rightValue={lastHistory.toCoinValue}
+                                rightCoin={lastHistory.toCoin}
+                            />
+                        )}
+                    </>
                 </div>
             </RowContainer>
         </div>

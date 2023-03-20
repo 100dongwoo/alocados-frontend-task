@@ -9,7 +9,7 @@ import { ColorTypes } from '@/styles/theme';
 interface ErrorInputType {
     style?: CSSProperties;
     disable?: boolean;
-    onChange: any;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value: string;
     type?: string;
 }
@@ -20,8 +20,6 @@ const ErrorInput = ({
     value,
     type = 'number',
 }: ErrorInputType) => {
-    const { colors } = useContext(ThemeContext);
-
     return (
         <Container disable={disable} style={style}>
             <SemiBoldPoppins12

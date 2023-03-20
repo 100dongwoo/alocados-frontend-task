@@ -1,5 +1,19 @@
 type coinList = 'Ethereum' | 'BnB' | 'Solana' | null;
 
+interface CoinType {
+    Solana: {
+        name: 'Solana';
+        image: 'assets/coins/icon/Solana.png';
+    };
+    Ethereum: {
+        name: 'Ethereum';
+        image: 'assets/coins/icon/Ethereum.png';
+    };
+    BnB: {
+        name: 'BnB';
+        image: 'assets/coins/icon/BnB.png';
+    };
+}
 export const Coins = {
     Solana: {
         name: 'Solana',

@@ -10,7 +10,7 @@ import { ThemeContext } from '@/contexts/ThemeProvider';
 import useToggle from '@/hooks/useToggle';
 
 interface DisableDropDownType {
-    onClick: any;
+    onClick: (data: any) => void;
     value: null | 'Solana' | 'Ethereum' | 'BnB';
 }
 
@@ -48,6 +48,7 @@ export const DisableDropDown = ({ onClick, value }: DisableDropDownType) => {
                     <SVG
                         src={`assets/icons/ChevronDown.svg`}
                         alt={'ChevronDown'}
+                        show={show}
                     />
                 </RowContainer>
             </Touchable>
@@ -109,4 +110,8 @@ const CoinImage = styled.img`
     width: 24px;
     height: 24px;
 `;
-const SVG = styled.img``;
+const SVG = styled.img`
+    transform: ${(props: { show: boolean }) =>
+        props.show ? 'rotate( 180deg )' : 'rotate( 540deg )'};
+    transition: 0.5s;
+`;

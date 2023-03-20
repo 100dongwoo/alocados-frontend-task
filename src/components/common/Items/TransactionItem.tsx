@@ -1,5 +1,7 @@
 import React, { CSSProperties, useContext, useMemo } from 'react';
 
+import dayjs, { Dayjs } from 'dayjs';
+
 import RowContainer from '@/components/common/Container/RowContainer';
 import SpaceBetweenContainer from '@/components/common/Container/SpaceBetweenContainer';
 import { NormalPoppins14 } from '@/components/common/Label';
@@ -13,6 +15,7 @@ interface TransactionItemType {
     leftCoin: 'Solana' | 'Ethereum' | 'BnB';
     rightValue: number;
     rightCoin: 'Solana' | 'Ethereum' | 'BnB';
+    date: Dayjs;
 }
 const TransactionItem = ({
     style,
@@ -20,6 +23,7 @@ const TransactionItem = ({
     leftCoin,
     rightValue,
     rightCoin,
+    date,
 }: TransactionItemType) => {
     const { colors } = useContext(ThemeContext);
 
@@ -38,7 +42,7 @@ const TransactionItem = ({
     return (
         <SpaceBetweenContainer style={{ ...listStyle, ...style }}>
             <NormalPoppins14
-                text={'2023-03-12, AM 10:50'}
+                text={dayjs(date).format('YYYY-MM-DD, A HH:mm')}
                 style={{ color: colors.LIGHTSHADE900 }}
             />
             <RowContainer>
