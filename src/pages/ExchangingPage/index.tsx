@@ -51,7 +51,7 @@ const ExchangingPage = () => {
     );
     const inputError =
         conversionCount === '0' ||
-        covertValue < 1 ||
+        // covertValue < 1 ||
         Boolean(
             fromSelectCoin &&
                 coins[COINTYPE[fromSelectCoin]] < parseFloat(conversionCount)
@@ -94,6 +94,7 @@ const ExchangingPage = () => {
             beforeAfterCoin + parseFloat(String(covertValue));
 
         covertAction({ history: obj, coinValues });
+        setConversionCount('');
     };
 
     const onClickDropDown = useCallback(
