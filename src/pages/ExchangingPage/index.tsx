@@ -77,6 +77,10 @@ const ExchangingPage = () => {
         if (hasError) {
             return;
         }
+        if (Math.floor(covertValue * 100) / 100 <= 0) {
+            alert('환전코인이 0.01 이상만 가능합니다.');
+            return;
+        }
         const obj = {
             fromCoin: fromSelectCoin,
             fromCoinValue: parseFloat(conversionCount),

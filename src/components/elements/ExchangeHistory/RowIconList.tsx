@@ -14,7 +14,12 @@ const RowIconList = ({ text, value }: RowIconListType) => {
     const { colors } = useContext(ThemeContext);
 
     return (
-        <RowContainer>
+        <RowContainer
+            style={{
+                minWidth: 120,
+                justifyContent: 'space-between',
+            }}
+        >
             <CoinImage src={`assets/coins/icon/${text}.png`} alt={text} />
             <SemiBoldPoppins18
                 text={
